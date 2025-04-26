@@ -1,0 +1,23 @@
+name: workflow
+
+on:
+  push:
+    branches: [ "main" ]
+    # Publish semver tags as releases.
+    tags: [ 'v*.*.*' ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  ansible:
+    needs: test
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    uses: ./.github/workflows/docker-publish.yml
+    with:
+      dockerfile: ./ansible/Dockerfile
+      image_name: ansible
+    secrets: inherit
