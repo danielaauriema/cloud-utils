@@ -10,13 +10,24 @@ on:
 
 jobs:
 
-  ansible:
+  ansible-build:
     permissions:
       contents: read
       packages: write
       id-token: write
     uses: ./.github/workflows/docker-publish.yml
     with:
-      dockerfile: ./ansible/Dockerfile
+      dockerfile: ./docker/ansible/Dockerfile
+      image_name: ansible
+    secrets: inherit
+
+  sshd-build:
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    uses: ./.github/workflows/docker-publish.yml
+    with:
+      dockerfile: ./docker/ansible/Dockerfile
       image_name: ansible
     secrets: inherit
